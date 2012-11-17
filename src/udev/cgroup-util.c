@@ -1,22 +1,23 @@
 /*-*- Mode: C; c-basic-offset: 8; indent-tabs-mode: nil -*-*/
 
 /***
-  This file is part of systemd.
+  This file is part of eudev.
 
   Copyright 2010 Lennart Poettering
+  Copyright 2012 Gentoo Foundation
 
-  systemd is free software; you can redistribute it and/or modify it
+  eudev is free software; you can redistribute it and/or modify it
   under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation; either version 2.1 of the License, or
   (at your option) any later version.
 
-  systemd is distributed in the hope that it will be useful, but
+  eudev is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
   Lesser General Public License for more details.
 
   You should have received a copy of the GNU Lesser General Public License
-  along with systemd; If not, see <http://www.gnu.org/licenses/>.
+  along with eudev; If not, see <http://www.gnu.org/licenses/>.
 ***/
 
 #include <errno.h>
@@ -507,7 +508,7 @@ finish:
 static const char *normalize_controller(const char *controller) {
 
         if (streq(controller, SYSTEMD_CGROUP_CONTROLLER))
-                return "systemd";
+                return "eudev";
         else if (startswith(controller, "name="))
                 return controller + 5;
         else
@@ -1129,7 +1130,7 @@ char **cg_shorten_controllers(char **controllers) {
                 int r;
                 const char *p;
 
-                if (streq(*f, "systemd") || streq(*f, SYSTEMD_CGROUP_CONTROLLER)) {
+                if (streq(*f, "eudev") || streq(*f, SYSTEMD_CGROUP_CONTROLLER)) {
                         free(*f);
                         continue;
                 }

@@ -1,22 +1,22 @@
 /*-*- Mode: C; c-basic-offset: 8; indent-tabs-mode: nil -*-*/
 
 /***
-  This file is part of systemd.
+  This file is part of eudev.
 
   Copyright 2011 Lennart Poettering
 
-  systemd is free software; you can redistribute it and/or modify it
+  eudev is free software; you can redistribute it and/or modify it
   under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation; either version 2.1 of the License, or
   (at your option) any later version.
 
-  systemd is distributed in the hope that it will be useful, but
+  eudev is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
   Lesser General Public License for more details.
 
   You should have received a copy of the GNU Lesser General Public License
-  along with systemd; If not, see <http://www.gnu.org/licenses/>.
+  along with eudev; If not, see <http://www.gnu.org/licenses/>.
 ***/
 
 #include <unistd.h>
@@ -140,7 +140,7 @@ _public_ int sd_uid_get_state(uid_t uid, char**state) {
         if (!state)
                 return -EINVAL;
 
-        if (asprintf(&p, "/run/systemd/users/%lu", (unsigned long) uid) < 0)
+        if (asprintf(&p, "/run/eudev/users/%lu", (unsigned long) uid) < 0)
                 return -ENOMEM;
 
         r = parse_env_file(p, NEWLINE, "STATE", &s, NULL);
@@ -175,7 +175,7 @@ _public_ int sd_uid_is_on_seat(uid_t uid, int require_active, const char *seat) 
 
         variable = require_active ? "ACTIVE_UID" : "UIDS";
 
-        p = strappend("/run/systemd/seats/", seat);
+        p = strappend("/run/eudev/seats/", seat);
         if (!p)
                 return -ENOMEM;
 
@@ -215,7 +215,7 @@ static int uid_get_array(uid_t uid, const char *variable, char ***array) {
         char **a;
         int r;
 
-        if (asprintf(&p, "/run/systemd/users/%lu", (unsigned long) uid) < 0)
+        if (asprintf(&p, "/run/eudev/users/%lu", (unsigned long) uid) < 0)
                 return -ENOMEM;
 
         r = parse_env_file(p, NEWLINE,
@@ -283,7 +283,7 @@ static int file_of_session(const char *session, char **_p) {
         assert(_p);
 
         if (session)
-                p = strappend("/run/systemd/sessions/", session);
+                p = strappend("/run/eudev/sessions/", session);
         else {
                 char *buf;
 
@@ -291,7 +291,7 @@ static int file_of_session(const char *session, char **_p) {
                 if (r < 0)
                         return r;
 
-                p = strappend("/run/systemd/sessions/", buf);
+                p = strappend("/run/eudev/sessions/", buf);
                 free(buf);
         }
 
@@ -432,7 +432,7 @@ static int file_of_seat(const char *seat, char **_p) {
         assert(_p);
 
         if (seat)
-                p = strappend("/run/systemd/seats/", seat);
+                p = strappend("/run/eudev/seats/", seat);
         else {
                 char *buf;
 
@@ -440,7 +440,7 @@ static int file_of_seat(const char *seat, char **_p) {
                 if (r < 0)
                         return r;
 
-                p = strappend("/run/systemd/seats/", buf);
+                p = strappend("/run/eudev/seats/", buf);
                 free(buf);
         }
 
@@ -633,11 +633,11 @@ _public_ int sd_seat_can_graphical(const char *seat) {
 }
 
 _public_ int sd_get_seats(char ***seats) {
-        return get_files_in_directory("/run/systemd/seats/", seats);
+        return get_files_in_directory("/run/eudev/seats/", seats);
 }
 
 _public_ int sd_get_sessions(char ***sessions) {
-        return get_files_in_directory("/run/systemd/sessions/", sessions);
+        return get_files_in_directory("/run/eudev/sessions/", sessions);
 }
 
 _public_ int sd_get_uids(uid_t **users) {
@@ -646,7 +646,7 @@ _public_ int sd_get_uids(uid_t **users) {
         unsigned n = 0;
         uid_t *l = NULL;
 
-        d = opendir("/run/systemd/users/");
+        d = opendir("/run/eudev/users/");
         if (!d)
                 return -errno;
 
@@ -727,7 +727,7 @@ _public_ int sd_login_monitor_new(const char *category, sd_login_monitor **m) {
                 return errno;
 
         if (!category || streq(category, "seat")) {
-                k = inotify_add_watch(fd, "/run/systemd/seats/", IN_MOVED_TO|IN_DELETE);
+                k = inotify_add_watch(fd, "/run/eudev/seats/", IN_MOVED_TO|IN_DELETE);
                 if (k < 0) {
                         close_nointr_nofail(fd);
                         return -errno;
@@ -737,7 +737,7 @@ _public_ int sd_login_monitor_new(const char *category, sd_login_monitor **m) {
         }
 
         if (!category || streq(category, "session")) {
-                k = inotify_add_watch(fd, "/run/systemd/sessions/", IN_MOVED_TO|IN_DELETE);
+                k = inotify_add_watch(fd, "/run/eudev/sessions/", IN_MOVED_TO|IN_DELETE);
                 if (k < 0) {
                         close_nointr_nofail(fd);
                         return -errno;
@@ -747,7 +747,7 @@ _public_ int sd_login_monitor_new(const char *category, sd_login_monitor **m) {
         }
 
         if (!category || streq(category, "uid")) {
-                k = inotify_add_watch(fd, "/run/systemd/users/", IN_MOVED_TO|IN_DELETE);
+                k = inotify_add_watch(fd, "/run/eudev/users/", IN_MOVED_TO|IN_DELETE);
                 if (k < 0) {
                         close_nointr_nofail(fd);
                         return -errno;

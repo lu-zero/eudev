@@ -3,6 +3,7 @@
  *
  * Copyright 2010-2012 Kay Sievers <kay@vrfy.org>
  * Copyright 2010 Lennart Poettering
+ * Copyright 2012 Gentoo Foundation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,9 +30,6 @@
 #include <dirent.h>
 #include <getopt.h>
 
-//#include <systemd/sd-daemon.h>
-//#include <systemd/sd-login.h>
-//#include "logind-acl.h"
 #include "udev.h"
 #include "util.h"
 

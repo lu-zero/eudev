@@ -35,34 +35,7 @@ extern "C" {
 #endif
 
 /*
-  Reference implementation of a few systemd related interfaces for
-  writing daemons. These interfaces are trivial to implement. To
-  simplify porting we provide this reference implementation.
-  Applications are welcome to reimplement the algorithms described
-  here if they do not want to include these two source files.
-
-  The following functionality is provided:
-
-  - Support for logging with log levels on stderr
-  - File descriptor passing for socket-based activation
-  - Daemon startup and status notification
-  - Detection of systemd boots
-
-  You may compile this with -DDISABLE_SYSTEMD to disable systemd
-  support. This makes all those calls NOPs that are directly related to
-  systemd (i.e. only sd_is_xxx() will stay useful).
-
-  Since this is drop-in code we don't want any of our symbols to be
-  exported in any case. Hence we declare hidden visibility for all of
-  them.
-
-  You may find an up-to-date version of these source files online:
-
-  http://cgit.freedesktop.org/systemd/systemd/plain/src/systemd/sd-daemon.h
-  http://cgit.freedesktop.org/systemd/systemd/plain/src/libsystemd-daemon/sd-daemon.c
-
-  This should compile on non-Linux systems, too, but with the
-  exception of the sd_is_xxx() calls all functions will become NOPs.
+  This should be removed in the future as this code is forked.
 
   See sd-daemon(3) for more information.
 */

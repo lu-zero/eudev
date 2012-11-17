@@ -522,13 +522,13 @@ _sd_export_ int sd_booted(void) {
 
         struct stat a, b;
 
-        /* We simply test whether the systemd cgroup hierarchy is
+        /* We simply test whether the eudev cgroup hierarchy is
          * mounted */
 
         if (lstat("/sys/fs/cgroup", &a) < 0)
                 return 0;
 
-        if (lstat("/sys/fs/cgroup/systemd", &b) < 0)
+        if (lstat("/sys/fs/cgroup/eudev", &b) < 0)
                 return 0;
 
         return a.st_dev != b.st_dev;
