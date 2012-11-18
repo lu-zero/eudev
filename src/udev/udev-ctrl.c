@@ -188,7 +188,7 @@ struct udev_ctrl_connection *udev_ctrl_get_connection(struct udev_ctrl *uctrl)
         conn->refcount = 1;
         conn->uctrl = uctrl;
 
-        conn->sock = accept4(uctrl->sock, NULL, NULL, SOCK_CLOEXEC|SOCK_NONBLOCK);
+        conn->sock = accept(uctrl->sock, NULL, NULL);
         if (conn->sock < 0) {
                 if (errno != EINTR)
                         log_error("unable to receive ctrl connection: %m\n");
