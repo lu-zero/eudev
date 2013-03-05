@@ -4323,6 +4323,9 @@ int execute_command(const char *command, char *const argv[])
 
                 int r = waitid(P_PID, pid, &si, WEXITED);
 
+                if (r < 0)
+                        return -errno;
+
                 if (!is_clean_exit(si.si_code, si.si_status, NULL)) {
                         if (si.si_code == CLD_EXITED)
                                 log_error("%s exited with exit status %i.", command, si.si_status);
