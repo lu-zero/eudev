@@ -1607,11 +1607,11 @@ struct udev_rules *udev_rules_new(struct udev *udev, int resolve_names)
 	 * original - UDEV_RULES_DIR should be /etc/udev/rules.d
 	 * ..but we have it set to UDEV_LIBEXEC_DIR "/rules.d" so that
 	 * ..the default rules are installed there instead of in /etc
-	 * 
+	 *
 	 * original2 - UDEV_LIBEXEC_DIR used to be forced to /usr/lib/udev
 	 * ..by default, we have it as /lib/udev (or whatever rootlibdir is)
 	 * ..therefore we did not include /usr/lib/udev/rules.d.
-	 * 
+	 *
 	 * Reworked code; there are duplicate paths here but at least
 	 * everyting is listed.
 	 */
