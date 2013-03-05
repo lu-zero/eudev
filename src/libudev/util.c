@@ -4331,7 +4331,7 @@ int execute_command(const char *command, char *const argv[])
                 } else
                         log_debug("%s exited successfully.", command);
 
-                return si.si_status; 
+                return si.si_status;
 
         }
 }
